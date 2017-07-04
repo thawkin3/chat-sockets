@@ -1,0 +1,26 @@
+<div>
+	<div class="container">
+        <div class="row">
+            <div class="text-center welcomeText">
+                <h2>Welcome to Chat Sockets!</h2>
+                <p>This is an online chatroom powered by the MEAN stack and Socket.io</p>
+            </div>
+        </div>
+    </div>
+	
+	<div class="container">
+        <div class="row">
+        	<div class="enterChatroomPageContent">
+	        	<p>Please enter a username to join the chatroom.</p>
+                <form id="usernameForm" role="form" ng-submit="joinChatroom()">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="username" placeholder="Username" ng-model="fields.username">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-lg btn-secondary">Join the chatroom</button>
+                    </div>
+                </form>
+        	</div>
+        </div>
+    </div>
+</div>
