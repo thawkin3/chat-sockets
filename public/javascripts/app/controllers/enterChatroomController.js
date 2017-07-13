@@ -4,7 +4,7 @@
 
 		$scope.joinChatroom = function () {
 			console.log($rootScope.fields.username);
-			if ($rootScope.fields.username != "" && typeof $rootScope.fields.username != "undefined") {
+			if (typeof $rootScope.fields.username != "undefined" && $rootScope.fields.username.trim() != "") {
 				$location.path("/main");
 			}
 		}

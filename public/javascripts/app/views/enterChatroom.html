@@ -14,7 +14,7 @@
 	        	<p>Please enter a username to join the chatroom.</p>
                 <form id="usernameForm" role="form" ng-submit="joinChatroom()">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="username" placeholder="Username" ng-model="fields.username">
+                        <input type="text" class="form-control" id="username" placeholder="Username" ng-model="fields.username" autocomplete="off" autofocus>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-lg btn-secondary">Join the chatroom</button>
