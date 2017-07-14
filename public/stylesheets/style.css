@@ -24,6 +24,27 @@ html, body {
 	margin: auto;
 	margin-bottom: 40px;
 }
+.enterChatroomPageContent .errorMessage {
+	background: #b70d0d;
+	color: #fff;
+	padding: 5px 10px;
+	text-align: center;
+	margin: auto;
+	margin-bottom: 20px;
+	border-radius: 6px;
+}
+.enterChatroomPageContent .btn-secondary {
+	background: #A1D4B4;
+	color: #fff;
+}
+.enterChatroomPageContent .btn-secondary:hover, .enterChatroomPageContent .btn-secondary:focus {
+	background: #6EA181;
+	color: #fff;
+}
+.enterChatroomPageContent .btn-secondary:active {
+	background: #558868;
+	color: #fff;
+}
 
 /*****************************/
 /* MAIN CHATROOM PAGE */

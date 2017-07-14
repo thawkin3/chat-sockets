@@ -22,13 +22,24 @@ app.config(function ($routeProvider) {
 		});
 });
 
-app.run(function($rootScope, $location, $window, $route) {
+app.run(function($rootScope, $location, $window, $route, socket) {
 
     // AUTHENTICATION
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
+	    console.log(event);
+	    console.log(next);
+	    console.log(current);
 	    if (typeof next.access != 'undefined' && next.access.restricted && !$rootScope.fields.username) {
 			$location.path('/enterChatroom');
 			$route.reload();
+		} else if (typeof current != "undefined" 
+			&& typeof next != "undefined" 
+			&& current.loadedTemplateUrl.indexOf("main.html") != -1) {
+			socket.emit('userLeftChatroom', {
+				username: "Chatroom",
+				message: $rootScope.fields.username + " has left the chatroom",
+				nameColor: "#606060"
+			});
 		}
     });
 

@@ -11,7 +11,8 @@
 	<div class="container">
         <div class="row">
         	<div class="enterChatroomPageContent">
-	        	<p>Please enter a username to join the chatroom.</p>
+	        	<div class="errorMessage" ng-show="showErrorMessage">Please enter a username that is at least three characters long and begins with an alphanumeric character.</div>
+                <p>Please enter a username to join the chatroom.</p>
                 <form id="usernameForm" role="form" ng-submit="joinChatroom()">
                     <div class="form-group">
                         <input type="text" class="form-control" id="username" placeholder="Username" ng-model="fields.username" autocomplete="off" autofocus>

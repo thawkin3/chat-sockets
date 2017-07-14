@@ -89,6 +89,11 @@ io.on('connection', function (socket) {
     io.emit('receiveMessage', data);
   });
 
+  socket.on('userLeftChatroom', function (data) {
+    messageData = updateMessageHistory(messageData, data);
+    io.emit('userDisconnected', data);
+  });
+
   socket.on('disconnect', function (data) {
     var disconnectedUser = "Someone";
     for (var i = 0; i < users.length; i++) {
