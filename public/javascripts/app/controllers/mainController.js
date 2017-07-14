@@ -1,6 +1,6 @@
 (function() {
 
-	var mainController = function ($scope, $routeParams, $rootScope, socket) {
+	var mainController = function ($scope, $routeParams, $rootScope, $timeout, socket) {
 
 		// INITIALIZE THE CHATS ARRAY
 		$scope.chats = [];
@@ -51,9 +51,15 @@
 			}
 		}
 
+		// JQUERY...
+		$("#chatMessage").focus();
+		$timeout(function () {
+			$("#chatroom").scrollTop($("#chatroom")[0].scrollHeight);
+		}, 200);
+
 	};
 
-	mainController.$inject = ['$scope', '$routeParams', '$rootScope', 'socket'];
+	mainController.$inject = ['$scope', '$routeParams', '$rootScope', '$timeout', 'socket'];
 
 	angular.module('ChatSockets')
 	    .controller('mainController', mainController);

@@ -94,8 +94,8 @@ io.on('connection', function (socket) {
     for (var i = 0; i < users.length; i++) {
       if (users[i].id == socket.id) {
         disconnectedUser = users[i].username;
-        users.splice(i, 1);
         colors.push(users[i].nameColor);
+        users.splice(i, 1);
       }
     }
     var myData = {

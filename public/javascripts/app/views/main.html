@@ -16,9 +16,9 @@
                         <span class="chatUsername" ng-style="{ 'color': chat.nameColor }">{{ chat.username }}</span>: <span class="chatMessage">{{ chat.message }}</span>
                     </p>
                 </div>
-                <form id="chatForm" role="form" ng-submit="postChatMessage()">
+                <form id="chatForm" role="form" ng-submit="postChatMessage()" scroll-bottom="chatroom">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="chatMessage" placeholder="Enter message here" ng-model="chatMessage" autocomplete="off" autofocus>
+                        <input type="text" class="form-control" id="chatMessage" placeholder="Enter message here" ng-model="chatMessage" autocomplete="off">
                     </div>
                 </form>
         	</div>
