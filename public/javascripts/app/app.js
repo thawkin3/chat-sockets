@@ -26,15 +26,18 @@ app.run(function($rootScope, $location, $window, $route, socket) {
 
     // AUTHENTICATION
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
-	    console.log(event);
-	    console.log(next);
-	    console.log(current);
 	    if (typeof next.access != 'undefined' && next.access.restricted && !$rootScope.fields.username) {
 			$location.path('/enterChatroom');
 			$route.reload();
-		} else if (typeof current != "undefined" 
-			&& typeof next != "undefined" 
-			&& current.loadedTemplateUrl.indexOf("main.html") != -1) {
+		} 
+    });
+
+	// SOCKET.IO EVENT FOR LEAVING CHATROOM
+    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+		if (typeof current != "undefined" 
+			&& typeof previous != "undefined" 
+			&& current.loadedTemplateUrl.indexOf("enterChatroom.html") != -1
+			&& previous.loadedTemplateUrl.indexOf("main.html") != -1) {
 			socket.emit('userLeftChatroom', {
 				username: "Chatroom",
 				message: $rootScope.fields.username + " has left the chatroom",

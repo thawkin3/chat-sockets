@@ -25,18 +25,22 @@
 			for (var i = 0; i < data.length; i++) {
 				$scope.chats.push(data[i]);
 			}
+			scrollDown();
 		});
 
 		socket.on('userJoinedChatroom', function (data) {
 			$scope.chats.push(data);
+			scrollDown();
 		});
 
 		socket.on('receiveMessage', function (data) {
 			$scope.chats.push(data);
+			scrollDown();
 		});
 
 		socket.on('userDisconnected', function (data) {
 			$scope.chats.push(data);
+			scrollDown();
 		});
 
 		// POST CHAT MESSAGE FROM INPUT BOX
@@ -53,9 +57,13 @@
 
 		// JQUERY...
 		$("#chatMessage").focus();
-		$timeout(function () {
-			$("#chatroom").scrollTop($("#chatroom")[0].scrollHeight);
-		}, 200);
+		function scrollDown () {
+			$timeout(function () {
+				if ($("#chatroom").length > 0) {
+					$("#chatroom").scrollTop($("#chatroom")[0].scrollHeight);
+				}
+			}, 200);
+		}
 
 	};
 
