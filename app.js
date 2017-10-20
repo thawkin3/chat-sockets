@@ -89,28 +89,44 @@ io.on('connection', function (socket) {
     io.emit('receiveMessage', data);
   });
 
+  socket.on('iAmTyping', function (data) {
+    socket.broadcast.emit('someoneIsTyping', data);
+  });
+
+  socket.on('iAmNotTyping', function (data) {
+    socket.broadcast.emit('someoneIsNotTyping', data);
+  });
+
   socket.on('userLeftChatroom', function (data) {
-    messageData = updateMessageHistory(messageData, data);
-    io.emit('userDisconnected', data);
+    disconnectOrLeftHelper(data);
   });
 
   socket.on('disconnect', function (data) {
+    disconnectOrLeftHelper(data);
+  });
+
+  function disconnectOrLeftHelper (data) {
     var disconnectedUser = "Someone";
     for (var i = 0; i < users.length; i++) {
       if (users[i].id == socket.id) {
         disconnectedUser = users[i].username;
+        console.log(disconnectedUser + "is disconnected");
         colors.push(users[i].nameColor);
         users.splice(i, 1);
+
+        var myData = {
+          username: "Chatroom",
+          message: disconnectedUser + " has left the chatroom",
+          nameColor: "#606060"
+        }
+        messageData = updateMessageHistory(messageData, myData);
+        io.emit('userDisconnected', myData);
+
+        break;
       }
     }
-    var myData = {
-      username: "Chatroom",
-      message: disconnectedUser + " has left the chatroom",
-      nameColor: "#606060"
-    }
-    messageData = updateMessageHistory(messageData, myData);
-    io.emit('userDisconnected', myData);
-  })
+  }
+
 });
 
 module.exports = { app: app, server: server };

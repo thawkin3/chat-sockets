@@ -1,6 +1,9 @@
 (function() {
 
-	var mainController = function ($scope, $routeParams, $rootScope, $timeout, socket) {
+	var mainController = function ($scope, $routeParams, $rootScope, $timeout, socket, $http) {
+
+		// NON-SCOPE VARIABLES
+		var API_KEY = "SnSMGkB2QB99JaRPzgM8koLYmSfUsRoB";
 
 		// INITIALIZE THE CHATS ARRAY
 		$scope.chats = [];
@@ -43,16 +46,71 @@
 			scrollDown();
 		});
 
+		socket.on('someoneIsTyping', function (data) {
+			$('#typingMessages').text(data.username + " is typing...");
+		});
+
+		socket.on('someoneIsNotTyping', function (data) {
+			$('#typingMessages').text("");
+		});
+
+		// LET OTHER USERS KNOW YOU'RE TYPING
+		$scope.typingHandler = function () {
+			socket.emit('iAmTyping', {
+				username: $rootScope.fields.username
+			});
+
+			$timeout(function () {
+				socket.emit('iAmNotTyping', {
+					username: $rootScope.fields.username
+				});
+			}, 2000);
+		}
+
 		// POST CHAT MESSAGE FROM INPUT BOX
 		$scope.postChatMessage = function () {
 			if ($scope.chatMessage != "" && typeof $scope.chatMessage != "undefined") {
-				socket.emit('sendMessage', {
-					username: $rootScope.fields.username,
-					message: $scope.chatMessage,
-					nameColor: $scope.nameColor
-				});
-				$scope.chatMessage = "";
+				
+				// GIPHY INTEGRATION
+				if ((/^\/giphy [a-zA-Z0-9]+/).test($scope.chatMessage)) {
+					var searchQuery = $scope.chatMessage.split("/giphy ")[1];
+					var url = 'https://api.giphy.com/v1/gifs/search?q=' + searchQuery + '&api_key=' + API_KEY + '&limit=1';
+					
+					$http.get(url).then(giphySuccess, giphyFail);
+				// NORMAL TEXT
+				} else {
+					socket.emit('sendMessage', {
+						username: $rootScope.fields.username,
+						message: $scope.chatMessage,
+						nameColor: $scope.nameColor
+					});
+					$scope.chatMessage = "";
+				}
 			}
+		}
+
+		// GIPHY SUCCESS FUNCTION
+		function giphySuccess (data) {
+			var searchText = "<div><i>" + $scope.chatMessage + "</i></div>";
+			var gifToSend = "<img src='" + data.data.data[0].images.fixed_height_small.url + "' width='200' />";
+			socket.emit('sendMessage', {
+				username: $rootScope.fields.username,
+				message: searchText + gifToSend,
+				nameColor: $scope.nameColor
+			});
+			$scope.chatMessage = "";
+		}
+
+		// GIPHY FAIL FUNCTION
+		function giphyFail (data) {
+			var searchText = "<div><i>" + $scope.chatMessage + "</i></div>";
+			var gifToSend = "<img src='https://media.giphy.com/media/3ohzdYJK1wAdPWVk88/giphy.gif' width='200' />";
+			socket.emit('sendMessage', {
+				username: $rootScope.fields.username,
+				message: searchText + gifToSend,
+				nameColor: $scope.nameColor
+			});
+			$scope.chatMessage = "";
 		}
 
 		// JQUERY...
@@ -67,7 +125,7 @@
 
 	};
 
-	mainController.$inject = ['$scope', '$routeParams', '$rootScope', '$timeout', 'socket'];
+	mainController.$inject = ['$scope', '$routeParams', '$rootScope', '$timeout', 'socket', '$http'];
 
 	angular.module('ChatSockets')
 	    .controller('mainController', mainController);

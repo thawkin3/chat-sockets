@@ -13,14 +13,15 @@
         	<div class="mainPageContent">
                 <div id="chatroom">
                     <p ng-repeat="chat in chats track by $index" ng-style="{ 'font-style': chat.username == 'Chatroom' ? 'italic' : 'normal' }">
-                        <span class="chatUsername" ng-style="{ 'color': chat.nameColor }">{{ chat.username }}</span>: <span class="chatMessage">{{ chat.message }}</span>
+                        <span class="chatUsername" ng-style="{ 'color': chat.nameColor }">{{ chat.username }}</span>: <span class="chatMessage" ng-bind-html="chat.message"></span>
                     </p>
                 </div>
                 <form id="chatForm" role="form" ng-submit="postChatMessage()" scroll-bottom="chatroom">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="chatMessage" placeholder="Enter message here" ng-model="chatMessage" autocomplete="off">
+                        <input type="text" class="form-control" id="chatMessage" placeholder="Enter message here" ng-model="chatMessage" autocomplete="off" ng-keyup="typingHandler()">
                     </div>
                 </form>
+                <div id="typingMessages"></div>
         	</div>
         </div>
     </div>

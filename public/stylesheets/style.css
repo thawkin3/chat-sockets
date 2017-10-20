@@ -80,5 +80,16 @@ html, body {
 	border: 3px solid #003a40;
     border-top: none;
 }
+.mainPageContent #chatForm .form-group {
+	margin-bottom: 0px;
+}
+.mainPageContent #typingMessages {
+	text-align: left;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    font-style: italic;
+    color: #fff;
+}
 
 

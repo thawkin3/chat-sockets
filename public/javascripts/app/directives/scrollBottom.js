@@ -5,7 +5,7 @@ angular.module('ChatSockets').directive("scrollBottom", ['$timeout', function ($
             $(element).on("submit", function () {
                 $timeout(function () {
                 	id.scrollTop(id[0].scrollHeight);
-                }, 50);
+                }, 200);
             });
         }
     }
