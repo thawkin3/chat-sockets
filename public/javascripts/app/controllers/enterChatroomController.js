@@ -1,11 +1,11 @@
 (function() {
-	var enterChatroomController = function ($scope, $routeParams, $rootScope, $http, $location, socket) {
+	var enterChatroomController = function($scope, $routeParams, $rootScope, $http, $location, socket) {
 		// CLEAR USERNAME IN THE EVENT OF A BACK BUTTON
 		$rootScope.fields.username = '';
 
 		// VALIDATE USERNAME AND MOVE TO CHATROOM
 		$scope.showErrorMessage = false;
-		$scope.joinChatroom = function () {
+		$scope.joinChatroom = function() {
 			if (typeof $rootScope.fields.username !== 'undefined' 
 				&& $rootScope.fields.username.trim() !== ''
 				&& $rootScope.fields.username.length > 2

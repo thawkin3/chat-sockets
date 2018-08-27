@@ -1,5 +1,5 @@
 (function() {
-	var mainController = function ($scope, $routeParams, $rootScope, $timeout, socket, $http) {
+	var mainController = function($scope, $routeParams, $rootScope, $timeout, socket, $http) {
 		// NON-SCOPE VARIABLES
 		var API_KEY = 'SnSMGkB2QB99JaRPzgM8koLYmSfUsRoB';
 
@@ -17,11 +17,11 @@
 			nameColor: $scope.chatroomMessageColor,
 		});
 
-		socket.on('colorAssignment', function (data) {
+		socket.on('colorAssignment', function(data) {
 			$scope.nameColor = data;
 		});
 
-		socket.on('youJoinedChatroom', function (data) {
+		socket.on('youJoinedChatroom', function(data) {
 			$scope.nameColor
 			for (var i = 0; i < data.length; i++) {
 				$scope.chats.push(data[i]);
@@ -29,36 +29,36 @@
 			scrollDown();
 		});
 
-		socket.on('userJoinedChatroom', function (data) {
+		socket.on('userJoinedChatroom', function(data) {
 			$scope.chats.push(data);
 			scrollDown();
 		});
 
-		socket.on('receiveMessage', function (data) {
+		socket.on('receiveMessage', function(data) {
 			$scope.chats.push(data);
 			scrollDown();
 		});
 
-		socket.on('userDisconnected', function (data) {
+		socket.on('userDisconnected', function(data) {
 			$scope.chats.push(data);
 			scrollDown();
 		});
 
-		socket.on('someoneIsTyping', function (data) {
+		socket.on('someoneIsTyping', function(data) {
 			$('#typingMessages').text(data.username + ' is typing...');
 		});
 
-		socket.on('someoneIsNotTyping', function (data) {
+		socket.on('someoneIsNotTyping', function(data) {
 			$('#typingMessages').text('');
 		});
 
 		// LET OTHER USERS KNOW YOU'RE TYPING
-		$scope.typingHandler = function () {
+		$scope.typingHandler = function() {
 			socket.emit('iAmTyping', {
 				username: $rootScope.fields.username,
 			});
 
-			$timeout(function () {
+			$timeout(function() {
 				socket.emit('iAmNotTyping', {
 					username: $rootScope.fields.username,
 				});
@@ -66,7 +66,7 @@
 		}
 
 		// POST CHAT MESSAGE FROM INPUT BOX
-		$scope.postChatMessage = function () {
+		$scope.postChatMessage = function() {
 			if ($scope.chatMessage && $scope.chatMessage.length <= 2000) {
 				// GIPHY INTEGRATION
 				if ((/^\/giphy [a-zA-Z0-9]+/).test($scope.chatMessage)) {
@@ -89,7 +89,7 @@
 		}
 
 		// GIPHY SUCCESS FUNCTION
-		function giphySuccess (data) {
+		function giphySuccess(data) {
 			var searchText = '<div><i>' + $scope.chatMessage + '</i></div>';
 			var gifToSend = '<img src="' + data.data.data[0].images.fixed_height_small.url + '" width="200" />';
 			socket.emit('sendMessage', {
@@ -101,7 +101,7 @@
 		}
 
 		// GIPHY FAIL FUNCTION
-		function giphyFail (data) {
+		function giphyFail(data) {
 			var searchText = '<div><i>' + $scope.chatMessage + '</i></div>';
 			var gifToSend = '<img src="https://media.giphy.com/media/3ohzdYJK1wAdPWVk88/giphy.gif" width="200" />';
 			socket.emit('sendMessage', {
@@ -114,8 +114,8 @@
 
 		// JQUERY...
 		$('#chatMessage').focus();
-		function scrollDown () {
-			$timeout(function () {
+		function scrollDown() {
+			$timeout(function() {
 				if ($('#chatroom').length > 0) {
 					$('#chatroom').scrollTop($('#chatroom')[0].scrollHeight);
 				}
