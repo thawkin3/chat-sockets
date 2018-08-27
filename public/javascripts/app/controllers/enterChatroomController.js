@@ -12,6 +12,7 @@
 				&& $rootScope.fields.username.length > 2
 				&& $rootScope.fields.username.length < 21
 				&& /^[a-zA-Z0-9]+$/.test($rootScope.fields.username)) {
+				$scope.showErrorMessage = false;
 				$scope.requestUsername();
 			} else {
 				$scope.showErrorMessage = true;
@@ -32,7 +33,6 @@
 		}
 
 		socket.on('usernameAvailability', function(data) {
-			console.log('usernameAvailability socket event');
 			if (data.isAvailable) {
 				$location.path('/main');
 			} else {
