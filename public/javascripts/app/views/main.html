@@ -12,7 +12,7 @@
         <div class="row">
         	<div class="mainPageContent">
                 <div id="chatroom">
-                    <p ng-repeat="chat in chats track by $index" ng-style="{ 'font-style': chat.username == 'Chatroom' ? 'italic' : 'normal' }">
+                    <p ng-repeat="chat in chats track by $index" ng-style="{ 'font-style': chat.username === 'Chatroom' ? 'italic' : 'normal' }">
                         <span class="chatUsername" ng-style="{ 'color': chat.nameColor }">{{ chat.username }}</span>: <span class="chatMessage" ng-bind-html="chat.message"></span>
                     </p>
                 </div>
@@ -21,6 +21,7 @@
                         <input type="text" class="form-control" id="chatMessage" placeholder="Enter message here" ng-model="chatMessage" autocomplete="off" ng-keyup="typingHandler()">
                     </div>
                 </form>
+                <div id="invalidMessage" ng-show="chatMessage.length > 2000">Your message must be less than 2000 characters long.</div>
                 <div id="typingMessages"></div>
         	</div>
         </div>
