@@ -75,6 +75,10 @@ function updateMessageHistory(messageHistory, newMessage) {
 io.on('connection', function(socket) {
   io.emit('userConnected', 'a new user has connected!');
 
+  socket.on('requestingUsername', function(data) {
+    io.to(socket.id).emit('usernameAvailability', { isAvailable: !users.find(user => user.username === data.requestedUsername) });
+  });
+
   socket.on('userJoinedChatroom', function(data) {
     messageData = updateMessageHistory(messageData, data);
     var assignedColor = colors.length > 0 ? colors.splice(Math.floor(Math.random() * colors.length), 1)[0] : '#000000';

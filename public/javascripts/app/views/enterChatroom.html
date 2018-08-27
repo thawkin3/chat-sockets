@@ -12,10 +12,11 @@
         <div class="row">
         	<div class="enterChatroomPageContent">
 	        	<div class="errorMessage" ng-show="showErrorMessage">Please enter a username that is 3-20 characters long and contains only alphanumeric characters.</div>
+                <div class="errorMessage" ng-show="showUsernameTaken">Sorry, this username is taken.</div>
                 <p>Please enter a username to join the chatroom.</p>
                 <form id="usernameForm" role="form" ng-submit="joinChatroom()">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="username" placeholder="Username" ng-model="fields.username" autocomplete="off" autofocus>
+                        <input type="text" class="form-control" id="username" placeholder="Username" ng-model="fields.username" ng-change="hideUsernameTakenMessage()" autocomplete="off" autofocus>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-lg btn-secondary">Join the chatroom</button>
