@@ -8,7 +8,6 @@ html, body {
 	font-size: 16px;
 }
 
-
 /*****************************/
 /* ENTER CHATROOM PAGE */
 /*****************************/
@@ -83,6 +82,7 @@ html, body {
 .mainPageContent #chatForm .form-group {
 	margin-bottom: 0px;
 }
+.mainPageContent #invalidMessage,
 .mainPageContent #typingMessages {
 	text-align: left;
     padding: 5px 10px;
@@ -91,5 +91,6 @@ html, body {
     font-style: italic;
     color: #fff;
 }
-
-
+.mainPageContent #invalidMessage {
+	margin-bottom: 0;
+}
